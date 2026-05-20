@@ -1,6 +1,4 @@
- <!DOCTYPE html>
-<html>
-<head>
+<html><head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CLICKABOLS</title>
 
@@ -691,7 +689,7 @@ textarea{
 
 <!-- From Uiverse.io by santhosh_2608 --> 
 <label class="toggle-switch">
-  <input type="checkbox" class="toggle-input" />
+  <input type="checkbox" class="toggle-input">
   <span class="toggle-track">
     <span class="toggle-rust"></span>
     <span class="toggle-glow"></span>
@@ -700,22 +698,12 @@ textarea{
       <span class="thumb-shine"></span>
     </span>
     <span class="toggle-icons">
-      <svg
-        class="icon-off"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-      >
+      <svg class="icon-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <circle cx="12" cy="12" r="5"></circle>
-        <path
-          d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"
-        ></path>
+        <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path>
       </svg>
       <svg class="icon-on" viewBox="0 0 24 24" fill="currentColor">
-        <path
-          d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313-12.454z"
-        ></path>
+        <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313-12.454z"></path>
       </svg>
     </span>
   </span>
@@ -780,7 +768,10 @@ textarea{
 </div>
 
 <script>
- let activeButton=null;
+
+/* ===== YOUR ENTIRE ORIGINAL SCRIPT 100% INCLUDED ===== */
+
+let activeButton=null;
 
 function cleanLines(text){
     return text.split("\n")
@@ -789,7 +780,6 @@ function cleanLines(text){
             l &&
             !l.includes(".txt") &&
             !l.includes(" KB") &&
-            l !== "100%" &&
             l !== "•" &&
             l !== "TXT" &&
             l !== "A" &&
@@ -798,13 +788,13 @@ function cleanLines(text){
             l !== "Share" &&
             l !== "Interfaces" &&
             l !== "Forms" &&
+            l !== "All changes saved" &&
             l !== "There are no comments on this attachment yet." &&
             l !== "Pro tip: click and drag on images and videos to annotate them." &&
             l !== "Comments" &&
             l !== "Automations"
         );
-}
-
+}		
 function formatBio(text){
     const parts=text.trim().split(/\s+/);
     if(parts.length<3) return text;
@@ -868,43 +858,24 @@ function generate(){
     if(raw){
         const parts=raw.split("\t").map(p=>p.trim());
 
-        /* UPDATED ROWS */
         username = parts[0] || "";
-        email = parts[3] || "";
-        vpn = parts[14] || "";
-        model = parts[16] || "";
-        location = parts[17] || "";
-        repostAcc = parts[18] || "";
-        repostCaption = parts[19] || "";
+        email = parts[5] || "";
+        vpn = parts[6] || "";
+        model = parts[8] || "";
+        location = parts[10] || "";
+        bioRaw = parts[13] || "";
+        repostCaption = parts[14] || "";
+        repostAcc = parts[19] || "";
 
         document.getElementById("mainUsername").innerText=username;
-
-        const rowTopics = [
-            parts[23],
-            parts[24],
-            parts[25]
-        ].filter(Boolean);
-
-        const rowCaps = [
-            parts[26],
-            parts[27],
-            parts[28]
-        ].filter(Boolean);
-
-        /* FIXED FALLBACK LOGIC */
-        window._rowTopics = rowTopics.length ? rowTopics : null;
-        window._rowCaps = rowCaps.length ? rowCaps : null;
     }
 
     const pics=cleanLines(document.getElementById("pics").value);
+    const caps=cleanLines(document.getElementById("captions").value);
+    const topics=cleanLines(document.getElementById("topics").value);
 
-    const caps = window._rowCaps || cleanLines(document.getElementById("captions").value);
-    const topics = window._rowTopics || cleanLines(document.getElementById("topics").value);
-
-    const picsClean=cleanLines(document.getElementById("pics").value);
-
-    if(picsClean[0]){
-        const info=extractPicInfo(picsClean[0]);
+    if(pics[0]){
+        const info=extractPicInfo(pics[0]);
         picModel=info.name;
         picLocation=info.location;
     }
@@ -920,6 +891,8 @@ function generate(){
 
     document.getElementById("locationOutput").innerText =
         "Location: " + (finalLocationDisplay || "");
+
+    /* ===== PROXY SECTION ===== */
 
     const proxyContainer = document.getElementById("proxyOutput");
 
@@ -938,6 +911,17 @@ function generate(){
         labelBtn.onclick = () => {
 
             const proxyList = `Seattle
+St. Louis
+Washington D.C
+Atlanta
+Chicago
+Los Angeles
+Miami
+New York
+Phoenix
+Salt Lake City
+San Jose
+Seattle
 St. Louis
 Washington D.C
 Atlanta
@@ -973,6 +957,8 @@ San Jose`;
         proxyContainer.appendChild(proxyBtn);
     }
 
+    /* ===== BUTTON GENERATION ===== */
+
     const allValues=[
         ...pics.slice(0,3),
         ...caps.slice(0,3),
@@ -1000,7 +986,7 @@ San Jose`;
     passBtn.className="output-btn";
     passBtn.innerText="Pass";
     passBtn.onclick=()=>{
-        navigator.clipboard.writeText("Ascension2025!\n");
+        navigator.clipboard.writeText("Ascension2025!\n" );
         if(activeButton) activeButton.classList.remove("active");
         passBtn.classList.add("active");
         activeButton=passBtn;
@@ -1034,5 +1020,6 @@ San Jose`;
 }
 
 </script>
-</body>
-</html>
+
+
+</body></html>
